@@ -1,4 +1,4 @@
-class Board:
+class Board():
     def __init__(self, size):
         self.board = [[None for i in range(size)] for i in range(size)]
 
@@ -30,7 +30,6 @@ class Board:
         self.board[target[0]][target[1]] = 0
 
     def move_piece(self, start_pos, end_pos):
-        print(type(self.board[start_pos[0]][start_pos[1]]))
         if self.board[start_pos[0]][start_pos[1]] != None or self.board[start_pos[0]][start_pos[1]] != 0:
             if self.validate_squares(self.get_path(start_pos, end_pos)) == True:
                 self.board[start_pos[0]][start_pos[1]], self.board[end_pos[0]][end_pos[1]] = self.board[end_pos[0]][end_pos[1]], self.board[start_pos[0]][start_pos[1]]
@@ -55,9 +54,7 @@ class Board:
             direction = "vertical"
 
         if direction == "diagonal":
-            return [
-                (i, j)
-                for i, j in zip(
+            return [(i, j) for i, j in zip(
                     range(start_pos[0] + x, end_pos[0] + x, x),
                     range(start_pos[1] + y, end_pos[1] + y, y))
                     ]
@@ -71,3 +68,24 @@ class Piece:
         self.color = color
         self.moves_performed = 0
         self.arrows_shot = 0
+
+class Player:
+    def __init__(self, name, color, board):
+        self.name = name
+        self.color = color
+        self.arrows_fired = 0
+        self.moves = 0
+        if self.color == "white":
+            self.active = True
+        else:
+            self.active = False
+    
+    def fire_arrow(self):
+        self.arrows_fired += 1
+    
+    def move(self):
+        self.move += 1
+
+class Gamestate:
+    def __init__(self):
+        pass

@@ -30,13 +30,41 @@ class Board:
         self.board[target[0]][target[1]] = 0
 
     def move_piece(self, start_pos, end_pos):
-        self.board[start_pos[0]][start_pos[1]], self.board[end_pos[0]][end_pos[1]] = self.board[end_pos[0]][end_pos[1]], self.board[start_pos[0]][start_pos[1]]
+        print(type(self.board[start_pos[0]][start_pos[1]]))
+        if self.board[start_pos[0]][start_pos[1]] != None or self.board[start_pos[0]][start_pos[1]] != 0:
+            if self.validate_squares(self.get_path(start_pos, end_pos)) == True:
+                self.board[start_pos[0]][start_pos[1]], self.board[end_pos[0]][end_pos[1]] = self.board[end_pos[0]][end_pos[1]], self.board[start_pos[0]][start_pos[1]]
+                self.board[end_pos[0]][end_pos[1]].moves_performed += 1
 
     def validate_squares(self, list_of_coordinates):
         for coordinates in list_of_coordinates:
             if self.board[coordinates[0]][coordinates[1]] != None:
                 return False
         return True
+    def get_path(self, start_pos, end_pos):
+        direction = "diagonal"
+        x = 1
+        y = 1
+        if start_pos[0] > end_pos[0]:
+            x = -1
+        if start_pos[0] == end_pos[0]:
+            direction = "horizontal"
+        if start_pos[1] > end_pos[1]:
+            y = -1
+        if start_pos[1] == end_pos[1]:
+            direction = "vertical"
+
+        if direction == "diagonal":
+            return [
+                (i, j)
+                for i, j in zip(
+                    range(start_pos[0] + x, end_pos[0] + x, x),
+                    range(start_pos[1] + y, end_pos[1] + y, y))
+                    ]
+        elif direction == "vertical":
+            return [(i, start_pos[1]) for i in range(start_pos[0] + x, end_pos[0] + x, x)]
+        elif direction == "horizontal":
+            return [(start_pos[0], i) for i in range(start_pos[1] + y, end_pos[1] + y, y)]
 
 class Piece:
     def __init__(self, color):

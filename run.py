@@ -1,5 +1,4 @@
 from classes import Board
 
-current_board = Board(8)
-current_board.board[0][0] = 1
+board = Board(10)
 pass

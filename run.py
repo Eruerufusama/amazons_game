@@ -1,7 +1,7 @@
-from classes import Board
+from classes import Game
 
 # Create board of size (4, 6, 8, or 10)
-board = Board(10)
+game = Game(10)
 
-board.move_piece((0, 3), (5, 8))
-pass
+while True:
+    pass
